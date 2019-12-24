@@ -3,12 +3,26 @@ import pygame
 from PIL import*
 from idlelib.idle_test.test_configdialog import root
 from django.utils.termcolors import background
+import random
+import question
+from django.conf.locale import lv
 
 pygame.init()
 root = Tk()
 root.title("Who wants to be a Millionaire")
 root.geometry('1352x652+0+0')
 root.configure(background='black')
+gt = ["Picture0.png","Picture1.png","Picture2.png","Picture3.png","Picture4.png","Picture5.png","Picture6.png","Picture7.png","Picture8.png"
+      ,"Picture9.png","Picture10.png","Picture11.png","Picture12.png","Picture13.png","Picture14.png","Picture15.png"]
+answer =StringVar()
+lv=0
+correct_answer = ""
+q = StringVar()
+a1=StringVar()
+a2=StringVar()
+a3=StringVar()
+a4=StringVar()
+test = StringVar()
 
 ABC = Frame(root, bg='black')
 ABC.grid()
@@ -28,7 +42,7 @@ QA.grid(row=2, column=0)
 LogoImage = PhotoImage(file='logo.png')
 LogoCenter = Button(logo, image=LogoImage, bg='black')
 LogoCenter.grid()
- ##################################################################################################################
+##################################################################################################################
 def click50_50():
     cavans = Canvas(help, bg='black',width = 160, height = 80)
     cavans.grid(row=0, column=0)
@@ -50,7 +64,35 @@ def clickFriend():
     image = PhotoImage(file = 'PhoneX.png')
     cavans.create_image(90,40,image = image)
     cavans.image = image
+def change(lv):
+    cavans = Canvas(giaithuong, bg='black',width = 452, height = 600)
+    cavans.grid(row=0, column=0)
+    cavans.delete('all')
+    image = PhotoImage(file = gt[lv])
+    cavans.create_image(230,305,image = image)
+    cavans.image = image
+def getquestion(lv):
+    qnum = int (random.random() * 10)
+    global quest    
+    quest = question.get_question(lv, qnum)    
+    q.set(quest[0])
+    a1.set(quest[1])
+    a2.set(quest[2])
+    a3.set(quest[3])
+    a4.set(quest[4])
+    global correct_answer
+    correct_answer = quest[5]
+
+def checkAnswer(str):
+    global correct_answer,lv    
+    if(str == correct_answer):
+        lv+=1
+        change(lv)
+        getquestion(lv)
+    else:
+        root.destroy()
     
+##################################################################################################################
 Image50_50 = PhotoImage(file='help50.png')
 Help50_50 = Button(help, image=Image50_50, bg='black', command = click50_50)
 Help50_50.grid(row=0, column=0)
@@ -63,35 +105,73 @@ ImagePeople = PhotoImage(file='people.png')
 HelpPeople = Button(help, image=ImagePeople, bg='black', command = clickPeople)
 HelpPeople.grid(row=0, column=2)
 
-ImageGiaiThuong = PhotoImage(file='Picture0.png')
+ImageGiaiThuong = PhotoImage(file=gt[lv])
 GiaiThuong = Button(giaithuong, image=ImageGiaiThuong, bg='black')
 GiaiThuong.grid(row=0, column=0)
 
-txtQuestion = Entry(QA, font=('arial', 18, 'bold'), bg='blue', fg='white', bd=5, width=44, justify=CENTER)
-txtQuestion.grid(row=0, column=0, columnspan=4, pady=4)
+lblQuestion = Label(QA, font=('arial', 14, 'bold'), bg='blue', fg='white', bd=5, width=44, justify=CENTER, wraplength = 500 , textvariable = q)
+lblQuestion.grid(row=0, column=0, columnspan=4, pady=4)
 
 lblAnswerA = Label(QA, font=('arial', 14, 'bold'), text='A: ', bg='black', fg='white', bd=5, justify=CENTER)
 lblAnswerA.grid(row=1, column=0, pady=4, sticky=W)
 
-btnAnswerA = Button(QA, font=('arial', 14, 'bold'), bg='blue', fg='white', bd=1, width=17, height=2, justify=CENTER)
+btnAnswerA = Button(QA, font=('arial', 14, 'bold'), bg='blue', fg='white', bd=1, width=17, height=2, justify=CENTER
+                    , textvariable = a1, command = lambda: checkAnswer(a1.get()) )
 btnAnswerA.grid(row=1, column=1 , pady=4)
 
 lblAnswerB = Label(QA, font=('arial', 14, 'bold'), text='B: ', bg='black', fg='white', bd=5, justify=CENTER)
 lblAnswerB.grid(row=1, column=2, pady=4, sticky=W)
 
-btnAnswerB = Button(QA, font=('arial', 14, 'bold'), bg='blue', fg='white', bd=1, width=17, height=2, justify=CENTER)
+btnAnswerB = Button(QA, font=('arial', 14, 'bold'), bg='blue', fg='white', bd=1, width=17, height=2, justify=CENTER
+                    , textvariable = a2, command = lambda: checkAnswer(a2.get()))
 btnAnswerB.grid(row=1, column=3 , pady=4)
 
 lblAnswerC = Label(QA, font=('arial', 14, 'bold'), text='C: ', bg='black', fg='white', bd=5, justify=CENTER)
 lblAnswerC.grid(row=2, column=0, pady=4, sticky=W)
 
-btnAnswerC = Button(QA, font=('arial', 14, 'bold'), bg='blue', fg='white', bd=1, width=17, height=2, justify=CENTER)
+btnAnswerC = Button(QA, font=('arial', 14, 'bold'), bg='blue', fg='white', bd=1, width=17, height=2, justify=CENTER
+                    , textvariable = a3, command = lambda: checkAnswer(a3.get()))
 btnAnswerC.grid(row=2, column=1 , pady=4)
 
 lblAnswerD = Label(QA, font=('arial', 14, 'bold'), text='D: ', bg='black', fg='white', bd=5, justify=CENTER)
 lblAnswerD.grid(row=2, column=2, pady=4, sticky=W)
 
-btnAnswerD = Button(QA, font=('arial', 14, 'bold'), bg='blue', fg='white', bd=1, width=17, height=2, justify=CENTER)
+btnAnswerD = Button(QA, font=('arial', 14, 'bold'), bg='blue', fg='white', bd=1, width=17, height=2, justify=CENTER
+                    , textvariable = a4, command = lambda: checkAnswer(a4.get()))
 btnAnswerD.grid(row=2, column=3 , pady=4)
 
+
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+getquestion(0)
 root.mainloop()
