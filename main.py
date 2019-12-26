@@ -16,13 +16,13 @@ gt = ["Picture0.png","Picture1.png","Picture2.png","Picture3.png","Picture4.png"
       ,"Picture9.png","Picture10.png","Picture11.png","Picture12.png","Picture13.png","Picture14.png","Picture15.png"]
 answer =StringVar()
 lv=0
+dem=0
 correct_answer = ""
 q = StringVar()
 a1=StringVar()
 a2=StringVar()
 a3=StringVar()
 a4=StringVar()
-test = StringVar()
 
 ABC = Frame(root, bg='black')
 ABC.grid()
@@ -50,6 +50,25 @@ def click50_50():
     image = PhotoImage(file = 'help50X.png')
     cavans.create_image(90,40,image = image)
     cavans.image = image
+    global  dem
+    while(dem<2):
+        hide = random.randint(1,4)
+        if(hide == 1):
+            if(a1.get() != correct_answer):
+                a1.set("")
+                dem +=1
+        if(hide == 2):
+            if(a2.get() != correct_answer):
+                a2.set("")
+                dem +=1
+        if(hide == 3):
+            if(a3.get() != correct_answer):
+                a3.set("")
+                dem +=1
+        if(hide == 4):
+            if(a4.get() != correct_answer):
+                a4.set("")
+                dem +=1  
 def clickPeople():
     cavans = Canvas(help, bg='black',width = 160, height = 80)
     cavans.grid(row=0, column=2)
@@ -84,7 +103,7 @@ def getquestion(lv):
     correct_answer = quest[5]
 
 def checkAnswer(str):
-    global correct_answer,lv    
+    global correct_answer,lv
     if(str == correct_answer):
         lv+=1
         change(lv)
@@ -140,38 +159,6 @@ btnAnswerD = Button(QA, font=('arial', 14, 'bold'), bg='blue', fg='white', bd=1,
                     , textvariable = a4, command = lambda: checkAnswer(a4.get()))
 btnAnswerD.grid(row=2, column=3 , pady=4)
 
-
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
     
 getquestion(0)
 root.mainloop()
