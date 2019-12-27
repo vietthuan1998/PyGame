@@ -83,6 +83,7 @@ def clickFriend():
     image = PhotoImage(file = 'PhoneX.png')
     cavans.create_image(90,40,image = image)
     cavans.image = image
+    getquestion(lv)
 def change(lv):
     cavans = Canvas(giaithuong, bg='black',width = 452, height = 600)
     cavans.grid(row=0, column=0)
@@ -101,6 +102,13 @@ def getquestion(lv):
     a4.set(quest[4])
     global correct_answer
     correct_answer = quest[5]
+    if(lv > 6):
+        cavans = Canvas(help, bg='black',width = 160, height = 80)
+        cavans.grid(row=0, column=1)
+        cavans.delete('all')
+        image = PhotoImage(file = 'PhoneX.png')
+        cavans.create_image(90,40,image = image)
+        cavans.image = image
 
 def checkAnswer(str):
     global correct_answer,lv
