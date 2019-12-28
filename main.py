@@ -1,4 +1,5 @@
 from tkinter import *
+from tkinter import messagebox
 import pygame
 from PIL import*
 from idlelib.idle_test.test_configdialog import root
@@ -12,8 +13,9 @@ root = Tk()
 root.title("Who wants to be a Millionaire")
 root.geometry('1352x652+0+0')
 root.configure(background='black')
-gt = ["Picture0.png","Picture1.png","Picture2.png","Picture3.png","Picture4.png","Picture5.png","Picture6.png","Picture7.png","Picture8.png"
-      ,"Picture9.png","Picture10.png","Picture11.png","Picture12.png","Picture13.png","Picture14.png","Picture15.png"]
+gt = ["image/Picture0.png","image/Picture1.png","image/Picture2.png","image/Picture3.png","image/Picture4.png","image/Picture5.png",
+      "image/Picture6.png","image/Picture7.png","image/Picture8.png","image/Picture9.png","image/Picture10.png","image/Picture11.png",
+      "image/Picture12.png","image/Picture13.png","image/Picture14.png","image/Picture15.png"]
 answer =StringVar()
 lv=0
 dem=0
@@ -39,7 +41,7 @@ logo.grid(row=1, column=0)
 QA = Frame(noidung, bg='black', bd=20, width=900, height=200)
 QA.grid(row=2, column=0)
 
-LogoImage = PhotoImage(file='logo.png')
+LogoImage = PhotoImage(file='image/logo.png')
 LogoCenter = Button(logo, image=LogoImage, bg='black')
 LogoCenter.grid()
 ##################################################################################################################
@@ -47,25 +49,31 @@ def click50_50():
     cavans = Canvas(help, bg='black',width = 160, height = 80)
     cavans.grid(row=0, column=0)
     cavans.delete('all')
-    image = PhotoImage(file = 'help50X.png')
+    image = PhotoImage(file = 'image/help50X.png')
     cavans.create_image(90,40,image = image)
     cavans.image = image
+    temp =0
     global  dem
     while(dem<2):
         hide = random.randint(1,4)
+        if(dem ==0):
+            temp = hide
+        else:
+            if(hide == temp):
+                hide = random.randint(1,4)
         if(hide == 1):
             if(a1.get() != correct_answer):
                 a1.set("")
                 dem +=1
-        if(hide == 2):
+        elif(hide == 2):
             if(a2.get() != correct_answer):
                 a2.set("")
                 dem +=1
-        if(hide == 3):
+        elif(hide == 3):
             if(a3.get() != correct_answer):
                 a3.set("")
                 dem +=1
-        if(hide == 4):
+        elif(hide == 4):
             if(a4.get() != correct_answer):
                 a4.set("")
                 dem +=1  
@@ -73,16 +81,16 @@ def clickPeople():
     cavans = Canvas(help, bg='black',width = 160, height = 80)
     cavans.grid(row=0, column=2)
     cavans.delete('all')
-    image = PhotoImage(file = 'peopleX.png')
+    image = PhotoImage(file = 'image/peopleX.png')
     cavans.create_image(90,40,image = image)
     cavans.image = image
 def clickFriend():
-    cavans = Canvas(help, bg='black',width = 160, height = 80)
-    cavans.grid(row=0, column=1)
-    cavans.delete('all')
-    image = PhotoImage(file = 'PhoneX.png')
-    cavans.create_image(90,40,image = image)
-    cavans.image = image
+#     cavans = Canvas(help, bg='black',width = 160, height = 80)
+#     cavans.grid(row=0, column=1)
+#     cavans.delete('all')
+#     image = PhotoImage(file = 'image/PhoneX.png')
+#     cavans.create_image(90,40,image = image)
+#     cavans.image = image
     getquestion(lv)
 def change(lv):
     cavans = Canvas(giaithuong, bg='black',width = 452, height = 600)
@@ -113,22 +121,32 @@ def getquestion(lv):
 def checkAnswer(str):
     global correct_answer,lv
     if(str == correct_answer):
-        lv+=1
-        change(lv)
-        getquestion(lv)
+        if(lv == 14):
+            messagebox.showinfo('congratulation', 'Chúc mừng ! Bạn đã đạt được 1 million $!')
+            root.destroy()
+        else:
+            lv+=1
+            change(lv)
+            getquestion(lv)
     else:
+        if(lv <5):
+            messagebox.showinfo('game over', 'Bạn đã thua cuộc!')
+        elif(lv <10):
+            messagebox.showinfo('game over', 'Số tiền bạn nhận được là 1.000$')
+        elif(lv <15):
+            messagebox.showinfo('game over', 'Số tiền bạn nhận được là 32.000$')
         root.destroy()
     
 ##################################################################################################################
-Image50_50 = PhotoImage(file='help50.png')
+Image50_50 = PhotoImage(file='image/help50.png')
 Help50_50 = Button(help, image=Image50_50, bg='black', command = click50_50)
 Help50_50.grid(row=0, column=0)
 
-ImagePhone = PhotoImage(file='Phone.png')
+ImagePhone = PhotoImage(file='image/Phone.png')
 HelpPhone = Button(help, image=ImagePhone, bg='black', command = clickFriend)
 HelpPhone.grid(row=0, column=1)
 
-ImagePeople = PhotoImage(file='people.png')
+ImagePeople = PhotoImage(file='image/people.png')
 HelpPeople = Button(help, image=ImagePeople, bg='black', command = clickPeople)
 HelpPeople.grid(row=0, column=2)
 
