@@ -85,12 +85,12 @@ def clickPeople():
     cavans.create_image(90,40,image = image)
     cavans.image = image
 def clickFriend():
-#     cavans = Canvas(help, bg='black',width = 160, height = 80)
-#     cavans.grid(row=0, column=1)
-#     cavans.delete('all')
-#     image = PhotoImage(file = 'image/PhoneX.png')
-#     cavans.create_image(90,40,image = image)
-#     cavans.image = image
+    cavans = Canvas(help, bg='black',width = 160, height = 80)
+    cavans.grid(row=0, column=1)
+    cavans.delete('all')
+    image = PhotoImage(file = 'image/PhoneX.png')
+    cavans.create_image(90,40,image = image)
+    cavans.image = image
     getquestion(lv)
 def change(lv):
     cavans = Canvas(giaithuong, bg='black',width = 452, height = 600)
