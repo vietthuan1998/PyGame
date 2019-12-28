@@ -7,6 +7,8 @@ from django.utils.termcolors import background
 import random
 import question
 from django.conf.locale import lv
+from pygame import image
+from django.core.files import images
 
 pygame.init()
 root = Tk()
@@ -58,24 +60,28 @@ def click50_50():
         hide = random.randint(1,4)
         if(dem ==0):
             temp = hide
-        else:
-            if(hide == temp):
+        elif(hide == temp):
                 hide = random.randint(1,4)
+                continue
         if(hide == 1):
             if(a1.get() != correct_answer):
                 a1.set("")
+                btnAnswerA["state"] = DISABLED
                 dem +=1
         elif(hide == 2):
             if(a2.get() != correct_answer):
                 a2.set("")
+                btnAnswerB["state"] = DISABLED
                 dem +=1
         elif(hide == 3):
             if(a3.get() != correct_answer):
                 a3.set("")
+                btnAnswerC["state"] = DISABLED
                 dem +=1
         elif(hide == 4):
             if(a4.get() != correct_answer):
                 a4.set("")
+                btnAnswerD["state"] = DISABLED
                 dem +=1  
 def clickPeople():
     cavans = Canvas(help, bg='black',width = 160, height = 80)
